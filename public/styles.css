@@ -144,3 +144,9 @@
 
 .chips { display: inline-flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end }
 .chips .chip + .chip { margin: 0 }
+
+/* Right to left: the page reads from the right, so the next hop is to the
+   left of this one, and an address — still written left to right — lines up
+   with the rest of the hop on the right-hand edge. */
+[dir=rtl] .hop-next .arrow { display: inline-block; transform: scaleX(-1) }
+[dir=rtl] .hop-url { text-align: right }
