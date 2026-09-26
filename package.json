@@ -1,0 +1,35 @@
+{
+  "name": "myredirectchecker",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://myredirectchecker.sharapov.biz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharapov-outsource/myredirectchecker.git"
+  },
+  "bugs": "https://github.com/sharapov-outsource/myredirectchecker/issues",
+  "description": "Every hop a link takes before it arrives: status, Location, who answered, timings, TLS and cookies, meta refresh and script redirects included",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "scan": "node scripts/scan-cli.js",
+    "icons": "node scripts/make-icons.js",
+    "check:i18n": "node scripts/check-i18n.js",
+    "check:syntax": "for f in public/app.js public/i18n.js server/*.js scripts/*.js; do node --check \"$f\" || exit 1; done",
+    "test:unit": "node --test \"test/*.test.js\"",
+    "smoke": "node scripts/smoke.js",
+    "test": "npm run check:syntax && npm run check:i18n && npm run test:unit && npm run smoke"
+  },
+  "dependencies": {
+    "@fastify/rate-limit": "^10.2.2",
+    "@fastify/static": "^10.1.2",
+    "@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#53cc2e870086549c9b6a755475a6f91a2171014b",
+    "fastify": "^5.2.1",
+    "yaml": "^2.7.0"
+  }
+}

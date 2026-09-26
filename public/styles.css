@@ -1,0 +1,146 @@
+/* ==========================================================================
+   myredirectchecker — the little the shared stylesheet does not already draw:
+   the options beside the search box, and the journey itself.
+   ========================================================================== */
+
+/* ---------- search options ---------- */
+.search-options { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.option { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft) }
+.option-label { white-space: nowrap }
+.option.check { cursor: pointer; user-select: none; padding: 0 4px }
+/* The shared rule styles every input in the search row as the address box;
+   the checkbox has to be taken back out of it. */
+.search .option.check input {
+  flex: none; min-width: 0; width: 16px; height: 16px; padding: 0; border: none;
+  accent-color: var(--brand); margin: 0; cursor: pointer;
+}
+@media (max-width: 560px) {
+  .search-options { width: 100%; justify-content: space-between }
+  .search-options .primary { flex: 1 0 100%; justify-content: center }
+}
+
+/* A link is read left to right whatever the interface language. */
+.host.link {
+  font-family: var(--font-mono); font-size: 17px; direction: ltr; unicode-bidi: plaintext;
+  word-break: break-all; overflow-wrap: anywhere;
+}
+
+/* ---------- the journey ---------- */
+.hops { list-style: none; margin: 4px 0 0; padding: 0; counter-reset: none }
+.hop {
+  position: relative; padding: 0 0 18px; margin: 0;
+  padding-inline-start: 46px;
+}
+/* The line that joins one hop to the next. */
+.hop::before {
+  content: ''; position: absolute; top: 30px; bottom: 0;
+  inset-inline-start: 15px; width: 2px; background: var(--line-strong);
+}
+.hop:last-child::before { display: none }
+.hop:last-child { padding-bottom: 6px }
+
+.hop-n {
+  position: absolute; inset-inline-start: 0; top: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  background: var(--bg-alt); color: var(--ink-soft); border: 1px solid var(--line-strong);
+}
+.hop.k-final .hop-n { background: var(--ok-tint); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent) }
+.hop.k-final.bad .hop-n,
+.hop.k-failed .hop-n,
+.hop.k-refused .hop-n { background: var(--bad-tint); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent) }
+.hop.k-not-followed .hop-n { border-style: dashed }
+
+.hop-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 32px }
+.status {
+  font-family: var(--font-mono); font-size: 12.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: var(--radius-pill); border: 1px solid var(--line);
+  background: var(--bg-alt); color: var(--ink);
+}
+.status.s2 { background: var(--ok-tint); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 35%, transparent) }
+.status.s3 { background: var(--brand-tint); color: var(--brand-ink); border-color: color-mix(in srgb, var(--brand) 35%, transparent) }
+.status.s4 { background: var(--warn-tint); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 35%, transparent) }
+.status.s5,
+.status.err { background: var(--bad-tint); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 35%, transparent) }
+.status-text { color: var(--ink-soft); font-size: 13px }
+.hop-time { margin-inline-start: auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink-faint) }
+
+.hop-url {
+  margin-top: 6px; font-family: var(--font-mono); font-size: 13px; line-height: 1.55;
+  direction: ltr; text-align: left; unicode-bidi: plaintext;
+  word-break: break-all; overflow-wrap: anywhere; color: var(--ink);
+}
+/* The part of the address this hop changed. */
+.hop-url mark {
+  background: color-mix(in srgb, var(--brand) 16%, transparent); color: inherit;
+  border-radius: 4px; padding: 0 2px;
+}
+.hop-url .scheme-http { color: var(--warn) }
+
+.hop-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px }
+.hop-meta .tag { font-size: 10.5px; padding: 3px 9px }
+
+.hop-next {
+  margin-top: 9px; font-size: 12.5px; color: var(--ink-soft);
+  display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: baseline;
+}
+.hop-next .arrow { font-family: var(--font-mono); color: var(--brand) }
+.hop-next .how { font-weight: 500; color: var(--ink) }
+.hop-next .loop { color: var(--bad); font-weight: 600 }
+.hop-problem { margin-top: 8px; font-size: 12.5px; color: var(--bad) }
+
+/* ---------- details ---------- */
+.hop details { margin-top: 10px }
+.hop summary {
+  cursor: pointer; font-size: 12.5px; color: var(--brand); user-select: none;
+  list-style: none; display: inline-flex; align-items: center; gap: 6px;
+}
+.hop summary::-webkit-details-marker { display: none }
+.hop summary::before { content: '▸'; font-size: 10px; transition: transform var(--t-fast) }
+.hop details[open] > summary::before { transform: rotate(90deg) }
+[dir=rtl] .hop summary::before { content: '◂' }
+[dir=rtl] .hop details[open] > summary::before { transform: rotate(-90deg) }
+.hop .detail-body {
+  margin-top: 10px; padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--bg-alt);
+}
+.hop .detail-body .sub-head:first-child { margin-top: 0 }
+.hop .kvlist .val { direction: ltr; unicode-bidi: plaintext }
+
+/* Where the time went: one bar, one segment per phase. */
+.timing { display: flex; height: 8px; border-radius: var(--radius-pill); overflow: hidden; background: var(--line); margin: 4px 0 8px }
+.timing i { display: block; height: 100%; min-width: 2px }
+.timing .t-dns { background: #8b5cf6 }
+.timing .t-connect { background: #0ea5e9 }
+.timing .t-tls { background: #14b8a6 }
+.timing .t-wait { background: var(--brand) }
+.timing-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11.5px; color: var(--ink-soft); font-family: var(--font-mono) }
+.timing-legend span::before {
+  content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px;
+  margin-inline-end: 5px; vertical-align: 0; background: currentColor;
+}
+.timing-legend .t-dns::before { background: #8b5cf6 }
+.timing-legend .t-connect::before { background: #0ea5e9 }
+.timing-legend .t-tls::before { background: #14b8a6 }
+.timing-legend .t-wait::before { background: var(--brand) }
+
+.headers-table td:first-child { white-space: nowrap; color: var(--ink-soft); font-family: var(--font-mono) }
+.headers-table td:last-child {
+  font-family: var(--font-mono); direction: ltr; text-align: left;
+  word-break: break-all; overflow-wrap: anywhere;
+}
+
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 6px 0 0 }
+.card-actions button { font-size: 12.5px; padding: 7px 12px }
+
+/* A hop drawn from the live stream, before the full report replaces it. */
+.hop.live .hop-head::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--brand);
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: .25 } }
+@media (prefers-reduced-motion: reduce) { .hop.live .hop-head::after { animation: none } }
+
+.chips { display: inline-flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end }
+.chips .chip + .chip { margin: 0 }

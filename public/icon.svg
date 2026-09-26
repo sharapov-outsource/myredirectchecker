@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Redirect Check">
+  <!-- A link's journey: two stops on the way, the one it arrives at the accent. -->
+  <rect width="1024" height="1024" rx="336" fill="#14110c"/>
+  <path d="M300 724 L724 300" stroke="#f5efe2" stroke-width="72" stroke-linecap="round"/>
+  <circle cx="300" cy="724" r="92" fill="#f5efe2"/>
+  <circle cx="512" cy="512" r="92" fill="#f5efe2"/>
+  <circle cx="724" cy="300" r="92" fill="#3a3aa6"/>
+</svg>
